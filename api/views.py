@@ -4,8 +4,8 @@ from rest_framework.authentication import TokenAuthentication
 from rest_framework.response import Response
 from django.views.decorators.csrf import csrf_protect
 
-from .serializers import ExpenseSerializer, UserProfileSerializer, UserSerializer, UserRegistrationSerializer, \
-    UserLoginSerializer
+from .permissions import IsOwner
+from .serializers import ExpenseSerializer, UserSerializer, UserRegistrationSerializer, UserLoginSerializer, UserProfileSerializer
 from .models import Expenses
 
 
@@ -13,7 +13,7 @@ class CreateView(generics.ListCreateAPIView):
     """This class defines the create behavior of our rest api."""
     queryset = Expenses.objects.all()
     serializer_class = ExpenseSerializer
-    permission_classes = (permissions.IsAuthenticated, )
+    permission_classes = (permissions.IsAuthenticated, IsOwner)
 
     def perform_create(self, serializer):
         """Save the post data when creating a new bucketlist."""
@@ -25,7 +25,7 @@ class DetailsView(generics.RetrieveUpdateDestroyAPIView):
 
     queryset = Expenses.objects.all()
     serializer_class = ExpenseSerializer
-    permission_classes = (permissions.IsAuthenticated, )
+    permission_classes = (permissions.IsAuthenticated, IsOwner)
 
 
 class UserView(generics.ListAPIView):
