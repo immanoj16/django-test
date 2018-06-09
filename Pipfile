@@ -9,6 +9,7 @@ name = "pypi"
 django = "*"
 djangorestframework = "*"
 pillow = "*"
+six = "*"
 
 [requires]
 python_version = "3.6"

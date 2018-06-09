@@ -15,7 +15,7 @@ class Expenses(models.Model):
     owner = models.ForeignKey('auth.User', related_name='expenselist', on_delete=models.CASCADE)
     price = models.IntegerField(default=0)
     image = models.ImageField(upload_to='photos/')
-    date_created = models.DateTimeField(auto_now_add=True)
+    created = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         """Return a human readable representation of the model instance."""
