@@ -61,7 +61,9 @@ ROOT_URLCONF = 'django_test.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [
+            os.path.join(BASE_DIR, 'build')
+        ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -140,3 +142,9 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.BasicAuthentication',
     )
 }
+
+STATICFILES_DIRS = [
+  os.path.join(BASE_DIR, 'build/static'),
+]
+
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
