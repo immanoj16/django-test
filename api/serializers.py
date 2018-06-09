@@ -66,7 +66,7 @@ class ExpenseSerializer(serializers.ModelSerializer):
         """Meta class to map serializer's fields with the model fields."""
         model = Expenses
         fields = ('id', 'name', 'owner', 'price', 'image', 'created')
-        read_only_fields = ('date_created', )
+        read_only_fields = ('created', )
 
 
 class UserRegistrationSerializer(serializers.ModelSerializer):

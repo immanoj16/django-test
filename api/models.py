@@ -1,4 +1,6 @@
+from django.db.models.signals import post_save
 from rest_framework.authtoken.models import Token
+from django.dispatch import receiver
 from django.conf import settings
 from django.db import models, transaction
 from django.contrib.auth import get_user_model
@@ -7,16 +9,23 @@ User = get_user_model()
 
 
 class Expenses(models.Model):
-    """This class represents the expenses model."""
+    """This class represents the expense list model."""
     name = models.CharField(max_length=255, blank=False, unique=True)
-    owner = models.ForeignKey('auth.User', related_name='expenselist', on_delete=models.CASCADE)
+    owner = models.ForeignKey('auth.User', related_name='expenses', on_delete=models.CASCADE)
     price = models.IntegerField(default=0)
     image = models.ImageField(upload_to='photos/')
-    created = models.DateTimeField(auto_now_add=True)
+    date_created = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         """Return a human readable representation of the model instance."""
         return "{}".format(self.name)
+
+
+# this receiver handles token creation immediately a new user is created.
+@receiver(post_save, sender=User)
+def create_auth_token(sender, instance=None, created=False, **kwargs):
+    if created:
+        Token.objects.create(user=instance)
 
 
 class UserProfileRegistrationManager(models.Manager):
@@ -80,3 +89,4 @@ class UserProfile(models.Model):
 
     def __str__(self):
         return str(self.user)
+
