@@ -10,6 +10,7 @@ django = "*"
 djangorestframework = "*"
 pillow = "*"
 six = "*"
+djangorestframework-jwt = "*"
 
 [requires]
 python_version = "3.6"
