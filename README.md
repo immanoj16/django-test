@@ -2,6 +2,8 @@
 
 ### It is made up of using Django, Django rest framework, django rest framework jwt in backend and React, Redux and Bootstrap in frontend.
 
+## Setup
+
 To use this awesome application you need to follow the following steps - 
 
   * make sure you have `python-3.x`, `pipenv`, `Node-v8.11.2`
@@ -111,6 +113,9 @@ To use this awesome application you need to follow the following steps -
   ```
   npm install
   ```
+  
+  ## Build Process
+  
   * make migrations and make sure delete all the files from `api/migrations` folder except `__init__.py`
   ```
   python3 manage.py makemigrations
@@ -140,3 +145,8 @@ To use this awesome application you need to follow the following steps -
   npm run start
   ```
   * and see `http://localhost:3000`
+  
+## Features
+  * You can create account and login
+  * After login you can create expenses with name, price and upload images
+  * See all the expenses in a table manner
