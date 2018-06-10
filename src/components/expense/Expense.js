@@ -4,9 +4,8 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 import { fetchExpenses, deleteExpense } from '../../actions/expenseActions';
-import ExpenseList from '../expense/ExpenseList';
 
-class Dashboard extends Component {
+class Expense extends Component {
 
   componentDidMount() {
     this.props.fetchExpenses(this.props.auth.user.username);
@@ -67,7 +66,7 @@ class Dashboard extends Component {
   }
 }
 
-Dashboard.propTypes = {
+Expense.propTypes = {
   fetchExpenses: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired,
   expenses: PropTypes.array.isRequired
@@ -78,4 +77,4 @@ const mapStateToProps = state => ({
   auth: state.auth
 })
 
-export default connect(mapStateToProps, { fetchExpenses, deleteExpense })(Dashboard);
+export default connect(mapStateToProps, { fetchExpenses, deleteExpense })(Expense);
