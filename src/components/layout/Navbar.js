@@ -17,24 +17,35 @@ class Navbar extends Component {
     const { isAuthenticated } = this.props.auth;
 
     const authLink = (
-      <ul className="navbar-nav ml-auto">
-        <li className="nav-item">
-          <a href="" onClick={this.onLogoutClick} className="nav-link">
-            {' '}Logout
-          </a>
-        </li>
-      </ul>
+      <div className="collapse navbar-collapse" id="mobile-nav">
+        <ul className="navbar-nav mr-auto">
+          <li className="nav-item">
+            <Link className="nav-link" to="/expenses">Expenses</Link>
+          </li>
+        </ul>
+
+        <ul className="navbar-nav ml-auto">
+          <li className="nav-item">
+            <a href="" onClick={this.onLogoutClick} className="nav-link">
+              {' '}Logout
+            </a>
+          </li>
+        </ul>
+
+      </div>
     );
 
     const guestLink = (
-      <ul className="navbar-nav ml-auto">
-        <li className="nav-item">
-          <Link className="nav-link" to="/register">Sign Up</Link>
-        </li>
-        <li className="nav-item">
-          <Link className="nav-link" to="/login">Login</Link>
-        </li>
-      </ul>
+      <div className="collapse navbar-collapse" id="mobile-nav">
+        <ul className="navbar-nav ml-auto">
+          <li className="nav-item">
+            <Link className="nav-link" to="/register">Sign Up</Link>
+          </li>
+          <li className="nav-item">
+            <Link className="nav-link" to="/login">Login</Link>
+          </li>
+        </ul>
+      </div>
     );
 
     return (
@@ -45,14 +56,7 @@ class Navbar extends Component {
             <span className="navbar-toggler-icon" />
           </button>
 
-          <div className="collapse navbar-collapse" id="mobile-nav">
-            <ul className="navbar-nav mr-auto">
-              <li className="nav-item">
-                <Link className="nav-link" to="/expenses">Expenses</Link>
-              </li>
-            </ul>
-            {isAuthenticated ? authLink : guestLink}
-          </div>
+          {isAuthenticated ? authLink : guestLink}
         </div>
       </nav>
     )
