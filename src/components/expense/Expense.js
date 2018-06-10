@@ -30,7 +30,6 @@ class Expense extends Component {
         <div>
           <p className="lead text-muted">Welcome <Link to={`/profile/${user.username}`}>{user.email}</Link>{' '}({user.username})</p>
           <ExpenseList
-            expenses={this.props.expenses}
             handleDelete={this.handleDelete}
             handleUpdate={this.handleUpdate}
           />

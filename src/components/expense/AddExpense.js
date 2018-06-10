@@ -18,11 +18,6 @@ class AddExpense extends Component {
     this.setState({ [e.target.name]: e.target.value });
   }
 
-  setFileRef = (element) => {
-    this.fileRef = element;
-    console.log(this.fileRef, element)
-  };
-
   onImageChange = (event) => {
     if (event.target.files && event.target.files[0]) {
       let reader = new FileReader();
@@ -33,10 +28,14 @@ class AddExpense extends Component {
     }
   };
 
+  static getDerivedStateFromProps(nextProps, prevState) {
+    return {
+      errors: nextProps.errors
+    }
+  }
+
   onSubmit = (e) => {
     e.preventDefault();
-
-    console.log(this.state);
 
     const expense = {
       name: this.state.name,
@@ -49,6 +48,15 @@ class AddExpense extends Component {
   };
 
   render() {
+
+    const { errors } = this.state;
+
+    let name, price, image;
+    if (Object.keys(errors).length > 0) {
+      name = errors.name[0];
+      price = errors.price[0];
+      image = errors.image[0];
+    }
 
     return (
       <div className="expense">
@@ -63,15 +71,20 @@ class AddExpense extends Component {
                   name="name"
                   value={this.state.name}
                   onChange={this.onChange}
+                  error={name}
                 />
                 <TextFieldGroup
                   placeholder="Price"
                   name="price"
                   value={this.state.price}
                   onChange={this.onChange}
+                  error={price}
                 />
-                <label className="form-check-label" style={{marginBottom: '5px'}}>Image</label><br/>
-                <input type="file" accept="image/*" onChange={this.onImageChange} ref={this.setFileRef} />
+                <div className="form-group">
+                  <label className="form-check-label" style={{marginBottom: '5px'}}>Image</label><br/>
+                  <input type="file" accept="image/*" onChange={this.onImageChange} />
+                  {image && <div className="invalid-feedback">{image}</div>}
+                </div>
                 <input type="submit" className="btn btn-info btn-block mt-4" />
               </form>
             </div>
@@ -89,7 +102,8 @@ AddExpense.propTypes = {
 }
 
 const mapStateToProps = (state) => ({
-  auth: state.auth
+  auth: state.auth,
+  errors: state.errors
 })
 
 export default connect(mapStateToProps, { addExpenseHandler })(AddExpense);

@@ -13,7 +13,7 @@ class Expenses(models.Model):
     name = models.CharField(max_length=255, blank=False, unique=True)
     owner = models.ForeignKey('auth.User', related_name='expenses', on_delete=models.CASCADE)
     price = models.IntegerField(default=0)
-    image = models.ImageField(upload_to='photos/')
+    image = models.ImageField(upload_to='photos/', blank=True, null=True)
     created = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):

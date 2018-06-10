@@ -33,18 +33,9 @@ export const loginUser = user => dispatch => {
     .catch(err => {
       dispatch({
         type: GET_ERRORS,
-        payload: err.response
+        payload: err.response.data
       })
     })
-
-  /*$.ajax({
-    type: 'POST',
-    url: '/api/obtain-auth-token/',
-    data: user,
-    success: function(res){
-      console.log(res)
-    }
-  })*/
 };
 
 export const setCurrentUser = decoded => {

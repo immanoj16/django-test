@@ -34,13 +34,35 @@ class Login extends Component {
     }
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.auth.isAuthenticated) {
-      this.props.history.push('/dashboard');
+  static getDerivedStateFromProps(nextProps, prevState) {
+    if (nextProps.auth.hasOwnProperty('isAuthenticated') && nextProps.auth.isAuthenticated) {
+      nextProps.history.push('/dashboard');
+    }
+
+    return {
+      errors: nextProps.errors
     }
   }
 
+  /*componentWillReceiveProps(nextProps) {
+    if (nextProps.auth.isAuthenticated) {
+      this.props.history.push('/dashboard');
+    }
+
+    if(nextProps.errors) {
+      this.setState({errors: nextProps.errors})
+    }
+  }*/
+
   render() {
+
+    const { errors } = this.state;
+
+    let username, password;
+    if (Object.keys(errors).length > 0) {
+      username = errors.username[0];
+      password = errors.password[0];
+    }
 
     return (
       <div className="login">
@@ -55,6 +77,7 @@ class Login extends Component {
                   name="username"
                   value={this.state.username}
                   onChange={this.onChange}
+                  error={username}
                 />
                 <TextFieldGroup
                   placeholder="Password"
@@ -62,6 +85,7 @@ class Login extends Component {
                   type="password"
                   value={this.state.password}
                   onChange={this.onChange}
+                  error={password}
                 />
                 <input type="submit" className="btn btn-info btn-block mt-4" />
               </form>
@@ -80,7 +104,8 @@ Login.propTypes = {
 }
 
 const mapStateToProps = (state) => ({
-  auth: state.auth
+  auth: state.auth,
+  errors: state.errors
 })
 
 export default connect(mapStateToProps, { loginUser })(Login);

@@ -30,14 +30,14 @@ export const fetchExpenses = (username) => dispatch => {
     })
 };
 
-const addExpenses = expenses => {
+export const addExpenses = expenses => {
   return {
     type: ADD_EXPENSES,
     expenses
   }
 };
 
-const addExpense = expense => {
+export const addExpense = expense => {
   return {
     type: ADD_EXPENSE,
     expense
@@ -53,19 +53,6 @@ export const deleteExpense = (id, owner) => dispatch => {
         payload: err.response.data
       })
     })
-
-  /*fetch(`/api/expense`, {
-    credentials: 'include',
-    method: 'DELETE',
-    mode: 'same-origin',
-    headers: {
-      'Accept': 'application/json',
-      'Content-Type': 'application/json',
-      'X-CSRFToken': csrftoken
-    },
-    body: {}
-   })
-  };*/
 };
 
 export const updateExpenseHandler = (id, owner, expense, history) => dispatch => {

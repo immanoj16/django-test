@@ -1,16 +1,18 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import sort from 'immutable-sort';
+
 import ExpenseModal from "./ExpenseModal";
+import PropTypes from "prop-types";
 
 class ExpenseList extends React.Component {
 
   state = {
-    expenses: this.props.expenses
+    expenses: []
   };
 
   sortByName = () => {
-    const expenses = this.props.expenses;
-
-    const sortedExpenses = expenses.sort((a, b) => {
+    const sortedExpenses = sort(this.state.expenses, (a, b) => {
       if(a.name < b.name) return -1;
       if(a.name > b.name) return 1;
       return 0;
@@ -20,7 +22,7 @@ class ExpenseList extends React.Component {
   };
 
   sortByDate = () => {
-    const expenses = this.props.expenses.sort((a, b) => {
+    const expenses = this.state.expenses.sort((a, b) => {
       return a.price < b.price
     });
 
@@ -28,9 +30,7 @@ class ExpenseList extends React.Component {
   };
 
   sortByPrice = () => {
-    const expenses = this.props.expenses;
-
-    const sortedExpenses = expenses.sort((a, b) => {
+    const sortedExpenses = sort(this.state.expenses, (a, b) => {
       if (a.price < b.price) return -1;
       if (a.price > b.price) return 1;
       return 0;
@@ -40,7 +40,6 @@ class ExpenseList extends React.Component {
   };
 
   sortByDefault = () => {
-    console.log(this.props.expenses);
     this.setState({expenses: this.props.expenses});
   };
 
@@ -48,6 +47,16 @@ class ExpenseList extends React.Component {
     if (nextProps.expenses.length !== this.props.expenses.length) {
       this.setState({expenses: nextProps.expenses})
     }
+  }
+
+  static getDerivedStateFromProps(nextProps, prevState) {
+    return {
+      expenses: nextProps.expenses
+    }
+  }
+
+  componentDidMount() {
+    this.setState({expenses: this.props.expenses})
   }
 
   render() {
@@ -86,8 +95,8 @@ class ExpenseList extends React.Component {
           </thead>
           <tbody>
           {expenses.map((expense, id) => (
-            <React.Fragment>
-              <tr key={expense.id}>
+            <React.Fragment key={expense.id}>
+              <tr>
                 <th scope="row">{id + 1}</th>
                 <td>{expense.name}</td>
                 <td>{expense.price}</td>
@@ -122,4 +131,12 @@ class ExpenseList extends React.Component {
   }
 }
 
-export default ExpenseList;
+ExpenseList.propTypes = {
+  expenses: PropTypes.array.isRequired
+}
+
+const mapStateToProps = state => ({
+  expenses: state.expenses
+})
+
+export default connect(mapStateToProps)(ExpenseList);
