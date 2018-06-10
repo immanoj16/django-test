@@ -20,7 +20,7 @@ class Landing extends Component {
               <div className="col-md-12 text-center">
                 <h1 className="display-3 mb-4">Expense Calculator
                 </h1>
-                <p className="lead">Create expenses to track expenses of yours</p>
+                <p className="lead">Create expenses and track of them in this application.</p>
                 <hr />
                 <Link to="/register" className="btn btn-lg btn-info mr-2">Sign Up</Link>
                 <Link to="/login" className="btn btn-lg btn-light">Login</Link>
@@ -35,10 +35,10 @@ class Landing extends Component {
 
 Landing.propTypes = {
   auth: PropTypes.object.isRequired
-};
+}
 
 const mapStateToProps = state => ({
   auth: state.auth
-});
+})
 
 export default connect(mapStateToProps)(Landing);

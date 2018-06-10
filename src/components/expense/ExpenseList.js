@@ -21,7 +21,7 @@ class ExpenseList extends React.Component {
 
   sortByDate = () => {
     const expenses = this.props.expenses.sort((a, b) => {
-      // logic
+      return a.price < b.price
     });
 
     this.setState({expenses});

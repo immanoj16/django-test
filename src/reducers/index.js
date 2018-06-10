@@ -2,13 +2,13 @@ import { createStore, applyMiddleware, combineReducers, compose } from 'redux';
 import thunk from 'redux-thunk';
 
 import authReducer from './authReducer';
-import expenseReducer from './expenseReducer';
 import errorReducer from './errorReducer';
+import expenseReducer from './expenseReducer';
 
 const rootReducer = combineReducers({
   auth: authReducer,
-  expenses: expenseReducer,
-  error: errorReducer
+  errors: errorReducer,
+  expenses: expenseReducer
 });
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;

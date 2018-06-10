@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 import { fetchExpenses, deleteExpense } from '../../actions/expenseActions';
-import ExpenseList from './ExpenseList';
+import ExpenseList from '../expense/ExpenseList';
 
 class Expense extends Component {
 
