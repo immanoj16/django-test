@@ -7,6 +7,7 @@ import Login from './components/auth/Login';
 import Register from './components/auth/Register';
 import Expense from './components/expense/Expense';
 import PrivateRoute from './components/common/PrivateRoute';
+import Footer from './components/layout/Footer';
 import './App.css';
 
 class App extends Component {
@@ -19,10 +20,11 @@ class App extends Component {
           <div className="container">
             <Route exact path='/register' component={Register} />
             <Route exact path='/login' component={Login} />
+            <Switch>
+              <PrivateRoute exact path='/expenses' component={Expense} />
+            </Switch>
           </div>
-          <Switch>
-            <PrivateRoute exact path='/expenses' component={Expense} />
-          </Switch>
+          <Footer />
         </div>
       </Router>
     );
