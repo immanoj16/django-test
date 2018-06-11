@@ -9,6 +9,7 @@ import Landing from './components/layout/Landing';
 import Register from './components/auth/Register';
 import Login from './components/auth/Login';
 import Dashboard from './components/dashboard/Dashboard';
+import Profile from './components/profile/Profile';
 import Expense from './components/expense/Expense';
 import setAuthToken from './utils/setAuthToken';
 import { setCurrentUser, logoutUser } from './actions/authActions';
@@ -21,15 +22,11 @@ if (localStorage.jwtToken) {
   setAuthToken(localStorage.jwtToken);
   // Decode the token to get user data
   const decoded = jwt_decode(localStorage.jwtToken);
-
-  console.log(decoded);
   // set current user
   store.dispatch(setCurrentUser(decoded));
 
   // Check for expired token
   const currentTime = Date.now() / 1000;
-  console.log(currentTime < decoded.exp);
-  console.log(decoded.exp, currentTime);
   if (decoded.exp < currentTime) {
     // Logout user
     store.dispatch(logoutUser());
@@ -55,6 +52,9 @@ class App extends Component {
             </Switch>
             <Switch>
               <PrivateRoute exact path='/dashboard' component={Dashboard} />
+            </Switch>
+            <Switch>
+              <PrivateRoute exact path='/profile' component={Profile} />
             </Switch>
             <Switch>
               <PrivateRoute exact path='/add-expense' component={AddExpense} />

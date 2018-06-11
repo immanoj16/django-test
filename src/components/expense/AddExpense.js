@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 
 import TextFieldGroup from '../common/TextFieldGroup';
 import { addExpenseHandler } from '../../actions/expenseActions';
+import {convertToObject} from "../../utils/convertToObject";
 
 class AddExpense extends Component {
 
@@ -49,14 +50,9 @@ class AddExpense extends Component {
 
   render() {
 
-    const { errors } = this.state;
+    const errors = convertToObject(this.state.errors);
 
-    let name, price, image;
-    if (Object.keys(errors).length > 0) {
-      name = errors.name[0];
-      price = errors.price[0];
-      image = errors.image[0];
-    }
+    const { name, price, image, non_field_errors } = errors;
 
     return (
       <div className="expense">
@@ -83,8 +79,10 @@ class AddExpense extends Component {
                 <div className="form-group">
                   <label className="form-check-label" style={{marginBottom: '5px'}}>Image</label><br/>
                   <input type="file" accept="image/*" onChange={this.onImageChange} />
-                  {image && <div className="invalid-feedback">{image}</div>}
+                  {image && <span style={{width: '100%', color: '#dc3545', marginTop: '.25rem', fontSize: '80%'}}>{image}</span>}
                 </div>
+                <br/>
+                {non_field_errors && <div style={{width: '100%', color: '#dc3545', marginTop: '.25rem', fontSize: '80%'}}>{non_field_errors}</div>}
                 <input type="submit" className="btn btn-info btn-block mt-4" />
               </form>
             </div>

@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 
 import { registerUser } from '../../actions/authActions';
 import TextFieldGroup from '../common/TextFieldGroup';
+import {convertToObject} from "../../utils/convertToObject";
 
 class Register extends Component {
 
@@ -52,17 +53,9 @@ class Register extends Component {
 
   render() {
 
-    const { errors } = this.state;
+    const errors = convertToObject(this.state.errors);
 
-    let username, firstName, lastName, email, password, password2;
-    if (Object.keys(errors).length > 0) {
-      username = errors.username[0];
-      firstName = errors.first_name[0];
-      lastName = errors.last_name[0];
-      email = errors.email[0];
-      password = errors.password[0];
-      password2 = errors.password_2[0];
-    }
+    const { username, first_name, last_name, email, password, password_2, non_field_errors } = errors;
 
     return (
       <div className="register">
@@ -84,14 +77,14 @@ class Register extends Component {
                   name="first_name"
                   value={this.state.first_name}
                   onChange={this.onChange}
-                  error={firstName}
+                  error={first_name}
                 />
                 <TextFieldGroup
                   placeholder="Last Name"
                   name="last_name"
                   value={this.state.last_name}
                   onChange={this.onChange}
-                  error={lastName}
+                  error={last_name}
                 />
                 <TextFieldGroup
                   placeholder="Email Address"
@@ -115,8 +108,9 @@ class Register extends Component {
                   type="password"
                   value={this.state.password_2}
                   onChange={this.onChange}
-                  error={password2}
+                  error={password_2}
                 />
+                {non_field_errors && <span style={{width: '100%', color: '#dc3545', marginTop: '.25rem', fontSize: '80%'}}>{non_field_errors}</span>}
                 <input type="submit" className="btn btn-info btn-block mt-4" />
               </form>
             </div>

@@ -28,7 +28,7 @@ class Expense extends Component {
     if (this.props.expenses.length > 0) {
       dashboardContent = (
         <div>
-          <p className="lead text-muted">Welcome <Link to={`/profile/${user.username}`}>{user.email}</Link>{' '}({user.username})</p>
+          <p className="lead text-muted">Welcome <Link to='profile'>{user.email}</Link>{' '}({user.username})</p>
           <ExpenseList
             handleDelete={this.handleDelete}
             handleUpdate={this.handleUpdate}

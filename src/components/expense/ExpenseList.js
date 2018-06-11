@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import sort from 'immutable-sort';
+import axios from 'axios';
 
 import ExpenseModal from "./ExpenseModal";
 import PropTypes from "prop-types";
@@ -22,11 +23,15 @@ class ExpenseList extends React.Component {
   };
 
   sortByDate = () => {
-    const expenses = this.state.expenses.sort((a, b) => {
-      return a.price < b.price
+    const sortedExpenses = sort(this.state.expenses, (a, b) => {
+      let aTime = new Date(a.created).getTime();
+      let bTime = new Date(b.created).getTime();
+      if (aTime > bTime) return -1;
+      if (aTime < bTime) return 1;
+      return 0;
     });
 
-    this.setState({expenses});
+    this.setState({expenses: sortedExpenses});
   };
 
   sortByPrice = () => {
@@ -43,20 +48,28 @@ class ExpenseList extends React.Component {
     this.setState({expenses: this.props.expenses});
   };
 
+  /*static getDerivedStateFromProps(nextProps, prevState) {
+    if (prevState.expenses !== nextProps.expenses) {
+      return {
+        expenses: nextProps.expenses
+      }
+    }
+
+    return null;
+  }*/
+
   componentWillReceiveProps(nextProps) {
-    if (nextProps.expenses.length !== this.props.expenses.length) {
+    if (nextProps.expenses.length !== this.state.expenses.length) {
       this.setState({expenses: nextProps.expenses})
     }
   }
 
-  static getDerivedStateFromProps(nextProps, prevState) {
-    return {
-      expenses: nextProps.expenses
-    }
-  }
-
   componentDidMount() {
-    this.setState({expenses: this.props.expenses})
+    this.setState({expenses: this.props.expenses});
+
+    axios.get('/api/users/user-profile/')
+      .then(res => console.log(res))
+      .catch(err => console.log(err.response))
   }
 
   render() {
@@ -100,20 +113,37 @@ class ExpenseList extends React.Component {
                 <th scope="row">{id + 1}</th>
                 <td>{expense.name}</td>
                 <td>{expense.price}</td>
-                <td>{expense.date_created}</td>
+                <td>{expense.created}</td>
                 <td>
-                  <button className="btn btn-danger btn-sm" onClick={() => handleDelete(expense.id, expense.owner)} style={{marginRight: '10px'}}>
+                  <button className="btn btn-danger btn-sm" data-toggle="modal" data-target="#myModalDelete" style={{marginRight: '10px'}}>
                     delete
                   </button>
-                  <button type="button" className="btn btn-primary btn-sm" data-toggle="modal" data-target="#myModal">
+                  <button type="button" className="btn btn-primary btn-sm" data-toggle="modal" data-target="#myModalUpdate">
                     update
                   </button>
                 </td>
               </tr>
-              <div className="modal fade" id="myModal">
+              <div className="modal fade" id="myModalUpdate">
                 <ExpenseModal
                   expense={expense}
                 />
+              </div>
+              <div className="modal fade" id="myModalDelete">
+                <div className="modal-dialog">
+                  <div className="modal-content">
+                    <div className="modal-body">
+                      Are you sure??
+                    </div>
+
+                    <div className="modal-footer">
+                      <button type="button" className="btn btn-danger" data-dismiss="modal">Close</button>
+                      <button className="btn btn-success" onClick={() => handleDelete(expense.id, expense.owner)}  data-dismiss="modal">
+                        Delete
+                      </button>
+                    </div>
+
+                  </div>
+                </div>
               </div>
             </React.Fragment>
           ))}

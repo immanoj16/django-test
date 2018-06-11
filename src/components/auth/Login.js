@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 
 import { loginUser, } from '../../actions/authActions';
 import TextFieldGroup from '../common/TextFieldGroup';
+import {convertToObject} from "../../utils/convertToObject";
 
 class Login extends Component {
 
@@ -56,13 +57,7 @@ class Login extends Component {
 
   render() {
 
-    const { errors } = this.state;
-
-    let username, password;
-    if (Object.keys(errors).length > 0) {
-      username = errors.username[0];
-      password = errors.password[0];
-    }
+    const errors = convertToObject(this.state.errors);
 
     return (
       <div className="login">
@@ -77,7 +72,7 @@ class Login extends Component {
                   name="username"
                   value={this.state.username}
                   onChange={this.onChange}
-                  error={username}
+                  error={errors.username}
                 />
                 <TextFieldGroup
                   placeholder="Password"
@@ -85,8 +80,9 @@ class Login extends Component {
                   type="password"
                   value={this.state.password}
                   onChange={this.onChange}
-                  error={password}
+                  error={errors.password}
                 />
+                {errors.non_field_errors && <span style={{width: '100%', color: '#dc3545', marginTop: '.25rem', fontSize: '80%'}}>{errors.non_field_errors}</span>}
                 <input type="submit" className="btn btn-info btn-block mt-4" />
               </form>
             </div>
