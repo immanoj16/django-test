@@ -12,6 +12,7 @@ pillow = "*"
 six = "*"
 djangorestframework-jwt = "*"
 django-cors-headers = "*"
+whitenoise = "*"
 
 [requires]
 python_version = "3.6"

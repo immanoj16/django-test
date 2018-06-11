@@ -25,7 +25,7 @@ SECRET_KEY = '4!t7&d&kbqlp=jv6rbyqbcdez!hfq3ghw-v8%ev0%b02#ehkm6'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['shrouded-caverns-59598.herokuapp.com', '127.0.0.1:8000']
 
 
 # Application definition
@@ -148,3 +148,4 @@ STATICFILES_DIRS = [
 ]
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
