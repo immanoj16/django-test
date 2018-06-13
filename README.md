@@ -155,6 +155,8 @@ To use this awesome application you need to follow the following steps -
   ```
   coverage html
   ```
+  in the project folder open `htmlcov/index.html` to see the current coverage
+  
   * for test
   ```
   python3 manage.py test
