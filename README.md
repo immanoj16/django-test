@@ -146,6 +146,20 @@ To use this awesome application you need to follow the following steps -
   ```
   * and see `http://localhost:3000`
   
+## Testing
+  * Produce coverage report for testing
+  ```
+  coverage run --source='.' manage.py test
+  ```
+  * Generate coverage report
+  ```
+  coverage html
+  ```
+  * for test
+  ```
+  python3 manage.py test
+  ```
+  
 ## Features
   * You can create account and login
   * After login you can create expenses with name, price and upload images
