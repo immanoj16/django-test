@@ -159,6 +159,10 @@ To use this awesome application you need to follow the following steps -
   ```
   python3 manage.py test
   ```
+  * test the frontend
+  ```
+  npm run test
+  ```
   
 ## Features
   * You can create account and login
